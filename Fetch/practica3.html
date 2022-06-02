@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch3</title>
+</head>
+<style>
+     body {background-color: black;}
+    .bodym {background-color: #222;}
+    h1 {color: white;}
+    #mapa {width: 100%; height: 850px;} 
+    input {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 15px; color: white; background-color: black; border: 1px dashed white; margin-top: .5rem; margin-left: .5rem; margin-bottom: 1rem;}
+    .gm-style{background-color: black;}
+    div:focus { outline: none; }
+</style>
+<body>
+    <input type="submit" name="Submit" value="Volver" onclick="history.go(-1)" />
+
+    <div class="container-fluid ">
+        <div class="container bodym rounded shadow-lg">
+            <div class="row m-5">
+                <div class="col-12 p-5">
+                    <div id="mapa"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        var coordinates = {
+            lat: 0,
+            lng: 0
+        };
+
+        var properties = {
+            center: coordinates, 
+            zoom: 2,
+            mapTypeControl: false,
+            streetViewControl: false,
+            styles: [
+                {
+                    "featureType": "all",
+                    "elementType": "labels",
+                    "stylers": [{"visibility": "on"}]
+                },{
+                    "featureType": "all",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"saturation": 36},{"color": "#000000"},{"lightness": 40}]
+                },{
+                    "featureType": "all",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [{"visibility": "on"},{"color": "#000000"},{"lightness": 16}]
+                },{
+                    "featureType": "all",
+                    "elementType": "labels.icon",
+                    "stylers": [{"visibility": "off"}]
+                },{
+                    "featureType": "administrative",
+                    "elementType": "geometry.fill",
+                    "stylers": [{"color": "#000000"},{"lightness": 20}]
+                },{
+                    "featureType": "administrative",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{"color": "#000000"},{"lightness": 17},{"weight": 1.2}]
+                },{
+                    "featureType": "administrative.country",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#e5c163"}]
+                },{
+                    "featureType": "administrative.locality",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#c4c4c4"}]
+                },{
+                    "featureType": "administrative.neighborhood",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#e5c163"}]
+                },{
+                    "featureType": "landscape",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#000000"},{"lightness": 20}]
+                },{
+                    "featureType": "poi",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#000000"},{"lightness": 21},{"visibility": "on"}]
+                },{
+                    "featureType": "poi.business",
+                    "elementType": "geometry",
+                    "stylers": [{"visibility": "on"}]
+                },{
+                    "featureType": "road.highway",
+                    "elementType": "geometry.fill",
+                    "stylers": [{"color": "#e5c163"},{"lightness": "0"}]
+                },{
+                    "featureType": "road.highway",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{"visibility": "off"}]
+                },{
+                    "featureType": "road.highway",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#ffffff"}]
+                },{
+                    "featureType": "road.highway",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [{"color": "#e5c163"}]
+                },{
+                    "featureType": "road.arterial",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#000000"},{"lightness": 18}]
+                },{
+                    "featureType": "road.arterial",
+                    "elementType": "geometry.fill",
+                    "stylers": [{"color": "#575757"}]
+                },{
+                    "featureType": "road.arterial",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#ffffff"}]
+                },{
+                    "featureType": "road.arterial",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [{"color": "#2c2c2c"}]
+                },{
+                    "featureType": "road.local",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#000000"},{"lightness": 16}]
+                },{
+                    "featureType": "road.local",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#999999"}]
+                },{
+                    "featureType": "transit",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#000000"},{"lightness": 19}]
+                },{
+                    "featureType": "water",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#000000"},{"lightness": 0}]
+                }
+            ]
+        };
+
+        function obtenerMarcadores() {
+            var obj = [
+                {
+                    name: "Mexico",
+                    longitude: "-99.1276",
+                    latitude: "19.427"
+                },
+                {
+                    name: "Brazil",
+                    longitude: "-47.9292",
+                    latitude: "-15.7801"
+                },
+                {
+                    name: "Spain",
+                    longitude: "-3.70327",
+                    latitude: "40.4167"
+                },
+            ];
+
+            return obj;
+        }
+
+        function iniciaMapa() {
+
+            const map = new google.maps.Map(document.getElementById("mapa"), properties);
+
+            const markers = obtenerMarcadores();
+
+            markers.map((m) => {
+                let marker = new google.maps.Marker({
+                    map: map, 
+                    position: new google.maps.LatLng(m.latitude, m.longitude),
+                    title: m.name,
+                    icon: "http://maps.google.com/mapfiles/kml/pal3/icon39.png"
+                })
+            });
+
+        }
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCy0EdEH8sbCa5Or0rzkyD-C9Kww_0iB70&callback=iniciaMapa" async defer></script>
+
+</body>
+</html>
