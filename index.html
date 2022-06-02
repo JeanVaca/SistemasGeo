@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+  <title>Sistemas Georefenciados</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <style>
+    body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
+    .w3-row-padding img {margin-bottom: 10px}
+    .w3-sidebar {width: 90px;background: black;}
+    .sidebarfire{margin-left: 6rem;}
+    .sidebarfetch{margin-left: 12rem;}
+    .footer {font-size: x-large; position: fixed; left: 19rem; bottom: 0; width: 100%; color: gray; text-align: left;}
+    h6{font-size: smaller;}
+    .gris{background-color: #222;}
+    .blanco{color: lightgray;}
+    #main {margin-left: 120px}
+    @media only screen and (max-width: 500px) {#main {margin-left: 0}}
+  </style>
+
+  <body class="gris">
+
+    <nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center">
+      <h6 style="color: white;">Google Maps</h6>
+      <a href="./Practica1/practica4.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-map w3-large"></i>
+        <h6>Practica 1</h6>
+      </a>
+      <a href="./Practica2/practica2.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-internet-explorer w3-large"></i>
+        <h6>Practica 2</h6>
+      </a>
+      <a href="./Practica3/practica3.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-map-marker w3-large"></i>
+        <h6>Practica 3</h6>
+      </a>
+      <a href="./Practica4/practica4.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-location-arrow w3-large"></i>
+        <h6>Practica 4</h6>
+      </a>
+      <a href="./Practica5/practica5.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-info-circle w3-large"></i>
+        <h6>Practica 5</h6>
+      </a>
+      <a href="./Practica6/practica6.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-compass w3-large"></i>
+        <h6>Practica 6</h6>
+      </a>
+      <a href="./Practica7/practica7.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-object-group w3-large"></i>
+        <h6>Practica 7</h6>
+      </a>
+      <a href="./Practica7/practica8.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-language w3-large"></i>
+        <h6>Practica 8</h6>
+      </a>
+      <a href="./Practica9/practica9.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-map-signs w3-large"></i>
+        <h6>Practica 9</h6>
+      </a>
+      <a href="./Practica10/Practica10.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-street-view w3-large"></i>
+        <h6>WatchPosition</h6>
+      </a>
+      <a href="./Practica11/Practica11.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-wrench w3-large"></i>
+        <h6>MapControllers</h6>
+      </a>
+      <a href="./Practica12/Practica12.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-space-shuttle w3-large"></i>
+        <h6>MapEvents</h6>
+      </a>
+    </nav>
+
+    <nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center sidebarfire">
+      <h6 style="color: white;">Firebase</h6>
+      <a href="./Firebase/practica1.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-database w3-large"></i>
+        <h6>Practica Firebase1</h6>
+      </a>
+      <a href="./Firebase/practica2.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-edit w3-large"></i>
+        <h6>Practica Firebase2</h6>
+      </a>
+      <a href="./Firebase/Practica3" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-at w3-large"></i>
+        <h6>Autorizacion</h6>
+      </a>
+      <a href="./Practica4Firebase/practica4.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-compass w3-large"></i>
+        <h6>Amigo</h6>
+      </a>
+      <a href="./Firebase/practica2client.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-list-ul w3-large"></i>
+        <h6>Practica Firebase Cliente</h6>
+      </a>
+      <a href="./Firebase/practica2map.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-eye w3-large"></i>
+        <h6>Practica Firebase Mapa</h6>
+      </a>
+    </nav>
+
+    <nav class="w3-sidebar w3-bar-block w3-small w3-hide-small w3-center sidebarfetch">
+      <h6 style="color: white;">Fetch</h6>
+      <a href="./Fetch/practica1.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-ellipsis-v w3-large"></i>
+        <h6>Practica Fetch1</h6>
+      </a>
+      <a href="./Fetch/practica2.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-bars w3-large"></i>
+        <h6>Practica Fetch2</h6>
+      </a>
+      <a href="./Fetch/practica3.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-thermometer w3-large"></i>
+        <h6>Practica Fetch2</h6>
+      </a>
+      <a href="./Fetch/practica4.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-globe w3-large"></i>
+        <h6>Practica Fetch4</h6>
+      </a>
+      <a href="./Final/index.html" class="blanco w3-bar-item w3-button w3-padding-medium w3-hover-gray">
+        <i class="fa fa-bullseye w3-large"></i>
+        <h6>Final</h6>
+      </a>
+    </nav>
+
+    <div class="w3-padding-large" id="main">
+      <header class="w3-container w3-padding-32 w3-center gris blanco" id="home">
+        <h1 class="w3-jumbo"><span class="w3-hide-small">Jean Carlo Vaca Estrella</span></h1>
+        <p>Estudiante de ingenieria en software y sistemas computacionales</p>
+      </header>
+      </div>
+    </div>
+
+    <div class="footer">
+      <i class="fa fa-facebook-official w3-hover-opacity"></i>
+      <i class="fa fa-instagram w3-hover-opacity"></i>
+      <i class="fa fa-snapchat w3-hover-opacity"></i>
+      <i class="fa fa-linkedin w3-hover-opacity"></i>
+    </div>
+
+  </body>
+</html>
