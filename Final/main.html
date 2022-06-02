@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Main</title>
+    <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.9.3/firebase-firestore.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Permanent Marker' rel='stylesheet'>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <style>
+        body{font-family: 'Permanent Marker';}
+        .mrgizdr2{margin-left: 2rem;margin-right: 2rem;}
+        h4{font-size: large;text-align: center;padding-top: 7px;}
+        img{width: 100%;}
+        #mapa {width: 100%; height: 200px;} 
+        .padtop{padding-top: 2rem;}
+        .logged-in, .logged-out{display: none;}
+    </style>
+</head>
+<body>
+    <button class="btn"  style="margin-left: 5rem; background-color: white; width: 1px; height: 1px;" onclick="go()"></button>
+
+    <nav class="navbar navbar-expand-lg navbar-light " style="background-color: white;">
+        <img src="img/logo.jpg" style="height: 75px; width: 125px;" alt="">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+              <a class="nav-link mrgizdr2" href="#" data-toggle="modal" data-target="#miCuenta">Mi Cuenta</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mrgizdr2" href="#" onclick="go()">Salir</a>
+            </li>
+          </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+          <div class="col-md-3">
+            <img src="img/1.jpg" alt="CARBON BLACK DARK ONE"> 
+            <p>CARBON BLACK DARK ONE</p> 
+            <p class="text-danger">$799.00</p> 
+            <button type="button" class="btn btn-light" data-toggle="modal" data-target="#myModal" style="border-color: black;">Comprar Ahora</button>
+          </div>
+          <div class="col-md-3" style="margin-top: 15px;">
+            <img src="img/2.jpg" alt="CARBON BLACK CHROME WARWICK"> 
+            <p>CARBON BLACK CHROME WARWICK</p> 
+            <p class="text-danger">$799.00</p> 
+            <button type="button" class="btn btn-light" data-toggle="modal" data-target="#myModal" style="border-color: black;">Comprar Ahora</button>
+          </div>
+          <div class="col-md-3">
+            <img src="img/3.jpg" alt="DIAMOND BLACK DARK NEW CLASSIC"> 
+            <p>DIAMOND BLACK DARK NEW CLASSIC</p> 
+            <p class="text-danger">$899.00</p> 
+            <button type="button" class="btn btn-light" data-toggle="modal" data-target="#myModal" style="border-color: black;">Comprar Ahora</button>
+          </div>
+          <div class="col-md-3">
+            <img src="img/4.jpg" alt="JUANPA ZURITA X HAWKERS NEON BLUE CAMO"> 
+            <p>JUANPA ZURITA X HAWKERS NEON BLUE CAMO</p> 
+            <p class="text-danger">$1099.00</p> 
+            <button type="button" class="btn btn-light" data-toggle="modal" data-target="#myModal" style="border-color: black;">Comprar Ahora</button>
+          </div>
+        </div>
+
+        <!-- Modal compra -->
+        <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Comprar</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                <label for="">A donde enviaremos tu producto?</label><br>
+                <input type="text" name="calle" id="calle" placeholder="Calle" style="text-align: center; width: 30rem; margin-bottom: 5px;" class="rounded"><br>
+                <input type="text" name="colonia" id="colonia" placeholder="Colonia" style="text-align: center; width: 30rem; margin-bottom: 5px;" class="rounded"><br>
+                <input type="text" name="pais" id="pais" placeholder="Pais" style="text-align: center; width: 30rem; margin-bottom: 5px;" class="rounded"><br>
+                <input type="text" name="estado" id="estado" placeholder="Estado" style="text-align: center; width: 30rem; margin-bottom: 5px;" class="rounded"><br>
+                <input type="text" name="codigopostal" id="codigopostal" placeholder="Codigo Postal" style="text-align: center; width: 30rem; margin-bottom: 5px;" class="rounded"><br>
+                <div id="mapa"></div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" id="aceptar">Aceptar</button>
+                    <button type="button" class="btn btn-default" style="color: red;" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <!-- Modal cuenta -->
+        <div class="modal fade" id="miCuenta" role="dialog">
+            <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Mi Cuenta</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+                <div class="modal-body">
+                <label for="">Nombre: Vaca Estrella</label><br>
+                <label for="">Correo: valla.jeanca@gmail.com</label><br>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+            </div>
+        </div>
+      </div>
+
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.4/firebase-database.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+        apiKey: "AIzaSyCcyWnzq3_yVVd7UAqC4LalnkH92s8oUkI",
+        authDomain: "final100-195f6.firebaseapp.com",
+        databaseURL: "https://final100-195f6.firebaseio.com",
+        projectId: "final100-195f6",
+        storageBucket: "final100-195f6.appspot.com",
+        messagingSenderId: "1071448251561",
+        appId: "1:1071448251561:web:138ff458f50a5f3436ddb8"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    </script>
+
+    <script>
+        function iniciaMapa() {
+            var coordenadas = {
+                lat: 19.412778, lng: -102.069619
+            }
+
+            var map = new google.maps.Map(
+                document.getElementById('mapa'),
+                {
+                    center: coordenadas,
+                    zoom: 15
+                }
+            );
+
+            var marcador = new google.maps.Marker({ position: coordenadas, map: map });
+            
+            google.maps.event.addListener(map, 'click', function(event) {
+            placeMarker(event.latLng);
+            });
+
+            function placeMarker(location) {
+                var marker = new google.maps.Marker({
+                    position: location, 
+                    map: map
+                });
+            }
+        }
+
+    </script>
+
+    <script>
+        var mapa4 = new google.maps.Map(document.getElementById('mapa'),propiedades);
+
+        mapa4.addListener('click', function(e){
+            console.log(e.latLng);
+
+            estableceMarcador(e.latLng);
+        });
+
+        function estableceMarcador(latLng){
+
+            var marker = new google.maps.Marker({
+                position: latLng,
+                map: mapa4
+            });
+
+            mapa4.panTo(latLng);
+
+        }
+    </script>
+    <script>function go() {location.replace("https://jeanvaca.github.io/SistemasGeo/Final/index.html")}</script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCy0EdEH8sbCa5Or0rzkyD-C9Kww_0iB70&callback=iniciaMapa" async defer></script>
+    <script src="js/function.js"></script>
+</body>
+</html>
