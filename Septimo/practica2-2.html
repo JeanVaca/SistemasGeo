@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practica 2.2 - Capas</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <style>
+
+    body {background-color: black;}
+    .bodym {background-color: #222;}
+    h1 {color: white;}
+    #mapid {width: 100%; height: 500px;} 
+    .button {transition-duration: 0.5s;background-color: #dbdbdb;border: none;color: #222;font-weight: bold;padding: 10px;text-align: center;text-decoration: none;display: inline-block;font-size: 16px;margin: 4px 2px;cursor: pointer;border-radius: 8px;}
+    .button:hover {background-color: #222;color:  #dbdbdb;}
+    </style>
+
+</head>
+<body>
+    <div class="container-fluid ">
+        <div class="container bodym rounded shadow-lg">
+            <div class="row m-5">
+                <div class="col-12 p-5">
+                    <div id="mapid"></div>
+                    <button class="button" onclick="restablecerMapa()">Restablecer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        var contador = 1;
+        var mymap = L.map('mapid').setView([21.152639, -101.711598], 15);
+        var verde = L.icon({iconUrl:'1.png',iconSize:[35, 35]});
+        var rojo = L.icon({iconUrl:'2.png',iconSize:[35, 35]});
+        var markerGroup = L.layerGroup().addTo(mymap);
+        
+        var normal = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {attribution: 'Hola :)',maxZoom: 18,id: 'mapbox/streets-v11',tileSize: 512,zoomOffset: -1,accessToken: 'pk.eyJ1IjoiamVhbnZhY2ExOTk2IiwiYSI6ImNrZXdtYWVxNTBiNmQyc2szcWJsZ2s3cXkifQ.GpC3IyP3dgvsxAE_sluttw'});
+        var blanco = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {attribution: 'Hola :)',maxZoom: 18,id: 'mapbox/light-v9',tileSize: 512,zoomOffset: -1,accessToken: 'pk.eyJ1IjoiamVhbnZhY2ExOTk2IiwiYSI6ImNrZXdtYWVxNTBiNmQyc2szcWJsZ2s3cXkifQ.GpC3IyP3dgvsxAE_sluttw'});
+        var negro = L.tileLayer('https://cartodb-basemaps-{s}.global.ssl.fastly.net/dark_all/{z}/{x}/{y}.png', {attribution: 'Hola :)',maxZoom: 18,id: 'mapbox/streets-v11',tileSize: 512,zoomOffset: -1,accessToken: 'pk.eyJ1IjoiamVhbnZhY2ExOTk2IiwiYSI6ImNrZXdtYWVxNTBiNmQyc2szcWJsZ2s3cXkifQ.GpC3IyP3dgvsxAE_sluttw'});
+        var amarillo = L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager_labels_under/{z}/{x}/{y}.png', {attribution: 'Hola :)',maxZoom: 18,id: 'mapbox/streets-v11',tileSize: 512,zoomOffset: -1,accessToken: 'pk.eyJ1IjoiamVhbnZhY2ExOTk2IiwiYSI6ImNrZXdtYWVxNTBiNmQyc2szcWJsZ2s3cXkifQ.GpC3IyP3dgvsxAE_sluttw'});
+        var calles = L.tileLayer('https://cdn.lima-labs.com/{z}/{x}/{y}.png?free', {attribution: 'Hola :)',maxZoom: 18,id: 'mapbox/streets-v11',tileSize: 512,zoomOffset: -1,accessToken: 'pk.eyJ1IjoiamVhbnZhY2ExOTk2IiwiYSI6ImNrZXdtYWVxNTBiNmQyc2szcWJsZ2s3cXkifQ.GpC3IyP3dgvsxAE_sluttw'});
+        
+        var baseLayers = {
+            "Normal": normal,
+            "Calles": calles,
+            "Blanco": blanco,
+            "Amarillo": amarillo,
+            "Negro": negro
+        };
+        var overlays = {};
+        L.control.layers(baseLayers, overlays).addTo(mymap);  
+
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+            maxZoom: 18,
+            id: 'mapbox/streets-v11',
+            tileSize: 512,
+            zoomOffset: -1,
+            accessToken: 'pk.eyJ1IjoiamVhbnZhY2ExOTk2IiwiYSI6ImNrZXdtYWVxNTBiNmQyc2szcWJsZ2s3cXkifQ.GpC3IyP3dgvsxAE_sluttw'
+        }).addTo(mymap);
+
+        function onMapClick(e) {
+            let latLng = mymap.mouseEventToLatLng(e.originalEvent)
+            if (contador > 3 && contador < 7 || contador > 9 && contador < 13|| contador > 15 && contador < 19) {
+                L.marker([latLng.lat,latLng.lng],{icon:rojo}).addTo(markerGroup);
+            }else{
+                L.marker([latLng.lat,latLng.lng],{icon:verde}).addTo(markerGroup);
+            }
+            contador++;
+        }
+        mymap.on("click", onMapClick);
+
+        function restablecerMapa(e){
+            mymap.removeLayer(markerGroup);
+
+            contador = 1;
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

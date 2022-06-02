@@ -1,0 +1,215 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos en mapas</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        body {background-color: black;}
+        .bodym {background-color: #222;}
+        h1 {color: white;}
+        #mapa1, #mapa2, #mapa3, #mapa4, #mapa5, #mapa6 {width: 100%;height: 340px;}
+        input {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 15px; color: white; background-color: black; border: 1px dashed white; margin-top: .5rem; margin-left: .5rem;}
+    </style>
+</head>
+<body>
+    <input type="submit" name="Submit" value="Volver" onclick="history.go(-1)" />
+
+    <div class="row m-4">
+        <div class="col-6">
+            <div class="card mt-4  W-100">
+                <div class="card-body">
+                    <h5 class="card-title">Evento Click en Mapa</h5>
+                    <div class="col-12" id="mapa1">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card mt-4  W-100">
+                <div class="card-body">
+                    <h5 class="card-title">Regresa al centro</h5>
+                    <div class="col-12" id="mapa2">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card mt-4  W-100">
+                <div class="card-body">
+                    <h5 class="card-title">Obtiene nivel de Zoom</h5>
+                    <div class="col-12" id="mapa3">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card mt-4  W-100">
+                <div class="card-body">
+                    <h5 class="card-title">Coloca marcador y mueve al centro
+                    </h5>
+                    <div class="col-12" id="mapa4">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card mt-4  W-100">
+                <div class="card-body">
+                    <h5 class="card-title">Obtiene coordenadas con mapsMouseEvent</h5>
+                    <div class="col-12" id="mapa5">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card mt-4  W-100">
+                <div class="card-body">
+                    <h5 class="card-title">addDomListener</h5>
+                    <div class="col-12" id="mapa6">
+                    </div>
+                    <div class="row d-flex justify-content-center m-3">
+                        <button class="btn btn-primary" id="btnCentrar">Centrar</button>
+                    </div>
+                 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        function iniciaMapa(){
+
+
+            var coordenadas = {  lat: 21.152639, lng:  -101.711598 };
+
+            var propiedades = {
+                center: coordenadas,
+                zoom: 12
+            };
+
+            var mapa1 = new google.maps.Map(document.getElementById('mapa1'),propiedades);
+
+            var marker = new google.maps.Marker({
+                position: coordenadas,
+                map: mapa1
+            });
+
+            marker.addListener('click', function(){
+                mapa1.setZoom(8);
+                mapa1.setCenter(marker.getPosition());
+            });
+
+
+            /*     MAPA2       */
+
+            var mapa2 = new google.maps.Map(document.getElementById('mapa2'),propiedades);
+
+            var marker2 = new google.maps.Marker({
+                position: coordenadas,
+                map: mapa2
+            });
+
+            mapa2.addListener('center_changed', function(){
+
+                window.setTimeout( function(){
+                    mapa2.panTo(marker2.getPosition());
+                },3000);
+
+            });
+
+
+
+            /*     MAPA3       */
+
+            var mapa3 = new google.maps.Map(document.getElementById('mapa3'),propiedades);
+
+            var infowindow = new google.maps.InfoWindow({
+                content : 'Cambia el zoom',
+                position : coordenadas
+            });
+
+            infowindow.open(mapa3);
+
+            mapa3.addListener('zoom_changed', function(){
+                infowindow.setContent('Zoom' + mapa3.getZoom());
+            });
+
+
+            /*     MAPA4      */
+
+            var mapa4 = new google.maps.Map(document.getElementById('mapa4'),propiedades);
+
+
+            mapa4.addListener('click', function(e){
+                console.log(e.latLng);
+
+                estableceMarcador(e.latLng);
+            });
+
+            function estableceMarcador(latLng){
+
+                var marker = new google.maps.Marker({
+                    position: latLng,
+                    map: mapa4
+                });
+
+                mapa4.panTo(latLng);
+
+            }
+
+            /*     MAPA5      */
+
+            var mapa5 = new google.maps.Map(document.getElementById('mapa5'),propiedades);
+
+            var infowindow = new google.maps.InfoWindow({
+                content : 'Haz click para obtener las coordenadas',
+                position : coordenadas
+            });
+
+            infowindow.open(mapa5);
+
+            mapa5.addListener('click', function(evento){
+                infowindow.close();
+
+                infowindow = new google.maps.InfoWindow({ position: evento.latLng });
+                infowindow.setContent(evento.latLng.toString());
+                infowindow.open(mapa5);
+
+            });
+
+            /*     MAPA6   */
+
+            var mapa6 = new google.maps.Map(document.getElementById('mapa6'),propiedades);
+
+            google.maps.event.addDomListener(mapa6, 'click', function(){
+                window.alert(' Se hizo click en el mapa');
+            });
+
+            var boton = document.getElementById('btnCentrar');
+            google.maps.event.addDomListener(boton, 'click', function(){
+                 mapa6.panTo(coordenadas);
+            });
+
+
+
+
+
+
+        }
+
+    </script>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyADjOfdGIg-7JiqjoTstMN9el4g-nLhxxA&callback=iniciaMapa" async defer></script>
+
+</body>
+</html>

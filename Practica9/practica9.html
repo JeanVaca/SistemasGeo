@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa con estilos</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <style>
+        body {background-color: black;}
+        .bodym {background-color: #222;}
+        #mapa {width: 100%; height: 700px;}     
+    </style>
+</head>
+<body>
+    <div class="container-fluid ">
+        <div class="container bodym rounded shadow-lg">
+            <div class="row m-1">
+                <div class="col-12 p-4">
+                    <div id="mapa"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+
+        function iniciaMapa() {
+
+            var estilomapa = new google.maps.StyledMapType([{
+                    "featureType": "all",
+                    "elementType": "labels",
+                    "stylers": [{"visibility": "on"}]
+                },{
+                    "featureType": "all",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"saturation": 36},{"color": "#000000"},{"lightness": 40}]
+                },{
+                    "featureType": "all",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [{"visibility": "on"},{"color": "#000000"},{"lightness": 16}]
+                },{
+                    "featureType": "all",
+                    "elementType": "labels.icon",
+                    "stylers": [{"visibility": "off"}]
+                },{
+                    "featureType": "administrative",
+                    "elementType": "geometry.fill",
+                    "stylers": [{"color": "#000000"},{"lightness": 20}]
+                },{
+                    "featureType": "administrative",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{"color": "#000000"},{"lightness": 17},{"weight": 1.2}]
+                },{
+                    "featureType": "administrative.country",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#e5c163"}]
+                },{
+                    "featureType": "administrative.locality",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#c4c4c4"}]
+                },{
+                    "featureType": "administrative.neighborhood",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#e5c163"}]
+                },{
+                    "featureType": "landscape",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#000000"},{"lightness": 20}]
+                },{
+                    "featureType": "poi",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#000000"},{"lightness": 21},{"visibility": "on"}]
+                },{
+                    "featureType": "poi.business",
+                    "elementType": "geometry",
+                    "stylers": [{"visibility": "on"}]
+                },{
+                    "featureType": "road.highway",
+                    "elementType": "geometry.fill",
+                    "stylers": [{"color": "#e5c163"},{"lightness": "0"}]
+                },{
+                    "featureType": "road.highway",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{"visibility": "off"}]
+                },{
+                    "featureType": "road.highway",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#ffffff"}]
+                },{
+                    "featureType": "road.highway",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [{"color": "#e5c163"}]
+                },{
+                    "featureType": "road.arterial",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#000000"},{"lightness": 18}]
+                },{
+                    "featureType": "road.arterial",
+                    "elementType": "geometry.fill",
+                    "stylers": [{"color": "#575757"}]
+                },{
+                    "featureType": "road.arterial",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#ffffff"}]
+                },{
+                    "featureType": "road.arterial",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [{"color": "#2c2c2c"}]
+                },{
+                    "featureType": "road.local",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#000000"},{"lightness": 16}]
+                },{
+                    "featureType": "road.local",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#999999"}]
+                },{
+                    "featureType": "transit",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#000000"},{"lightness": 19}]
+                },{
+                    "featureType": "water",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#000000"},{"lightness": 0}]
+                }], {name: "Dark"});
+
+            var propiedades = {
+                center: {lat: 21.152639, lng: -101.711598},
+                zoom: 14,
+                mapTypeControlOptions: {
+                    mapTypeIds: ['roadmap', 'satellite', 'terrain', 'style_map']
+                },
+                streetViewControl: false,
+                fullscreenControl: false,
+                zoomControl: false
+            }    
+
+            var mapa = document.getElementById("mapa");
+            var map = new google.maps.Map(mapa,propiedades);
+
+            map.mapTypes.set('style_map', estilomapa);
+            mao.setMapTypeId('style_map');
+        }
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCy0EdEH8sbCa5Or0rzkyD-C9Kww_0iB70&callback=iniciaMapa" async defer></script>
+</body>
+</html>

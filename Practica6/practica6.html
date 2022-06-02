@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Practica 6</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+
+    body {background-color: black;}
+    .bodym {background-color: #222;}
+    h1 {color: white;}
+    #mapa {width: 100%; height: 500px;} 
+    input {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 15px; color: white; background-color: black; border: 1px dashed white; margin-top: .5rem; margin-left: .5rem;}
+
+    </style>
+
+</head>
+<body>
+
+    <input type="submit" name="Submit" value="Volver" onclick="history.go(-1)" />
+
+    <div class="container-fluid ">
+        <div class="container bodym rounded shadow-lg">
+            <div class="row m-5">
+                <div class="col-12 p-5">
+
+                    <div id="mapa"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        var coordenadas = {
+            lat : 0, 
+            lng: 0
+        }
+         var  propiedades = {
+             center: coordenadas, 
+             zoom: 20
+         }
+        function iniciaMapa(){
+            map= new google.maps.Map(document.getElementById("mapa"), propiedades)
+            var icono = { 
+                url:"http://icons.iconarchive.com/icons/iconsmind/outline/128/Location-icon.png", 
+                scaledSize: new google.maps.Size(15,15), 
+                origin: google.maps.Point(0,0),
+                anchor: google.maps.Point(0,0)
+            }
+            var marker= new google.maps.Marker({
+                position:{
+                    lat: 0, 
+                    lng : 0
+                },
+                icon:icono,
+                scaledSize: new google.maps.Size(50,50), 
+                map: map
+            });
+            if(navigator.geolocation){
+                setInterval(function(){
+                    moverPosicion(marker)
+                },3000)
+                
+            }
+        }
+
+        function moverPosicion(marker){
+            navigator.geolocation.getCurrentPosition(posicion => {
+                var pos={
+                    lat: posicion.coords.latitude, 
+                    lng: posicion.coords.longitude
+                }
+                marker.setPosition(new google.maps.LatLng(posicion.coords.latitude, posicion.coords.longitude))
+                map.panTo(new google.maps.LatLng(posicion.coords.latitude, posicion.coords.longitude))
+                map. setCenter(pos)
+            });
+           
+        }
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCy0EdEH8sbCa5Or0rzkyD-C9Kww_0iB70&callback=iniciaMapa" async defer></script>
+
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica 8</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+        html, body {margin: 0px; padding: 0px; background-color: black;}
+        #mapa {width: 100%; height: 640px;} 
+        .bodym {background-color: #222;}
+        h1{color: white;}
+        .pad{padding-top: 0rem; padding-left: 2rem; padding-right: 2rem; padding-bottom: 2rem;}
+        .selecter{background-color: #222; color: white;}
+        .selecter:active{background-color: #222; color: white;}
+        input {font-family: Verdana, Arial, Helvetica, sans-serif; font-size: 15px; color: white; background-color: black; border: 1px dashed white; margin-top: .5rem; margin-left: .5rem; margin-bottom: 1rem;}
+        .gm-style{background-color: black;}
+        div:focus { outline: none; }
+    </style>
+
+</head>
+<body>
+    <input type="submit" name="Submit" value="Volver" onclick="history.go(-1)" />
+
+    <form action="">
+    <div class="container-fluid">
+        <div class="container bodym rounded shadow-lg">
+            <h1 class="text-center">Selecciona un idioma:</h1>
+            <div class="row justify-content-center pad">
+                    <div class="col-6">
+                        <select id="idioma" name="idioma" class="form-control selecter" onchange="this.form.submit()">
+                            <option value="en">Inglés</option>
+                            <option value="ru">Ruso</option>
+                            <option value="iw">Hebreo</option>
+                            <option value="zh">Chino</option>
+                            <option value="ja">Japones</option>
+                            <option value="la">Latin</option>
+                        </select>
+                    </div>
+            </div>
+            <div class="row">
+                <div class="col-12 pad">
+                    <div id="mapa"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+
+    <script>
+        var coordenadas = {
+            lat: 0, lng: 0
+        }
+
+        var estilomapa = [{
+                    "featureType": "all",
+                    "elementType": "labels",
+                    "stylers": [{"visibility": "on"}]
+                },{
+                    "featureType": "all",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"saturation": 36},{"color": "#000000"},{"lightness": 40}]
+                },{
+                    "featureType": "all",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [{"visibility": "on"},{"color": "#000000"},{"lightness": 16}]
+                },{
+                    "featureType": "all",
+                    "elementType": "labels.icon",
+                    "stylers": [{"visibility": "off"}]
+                },{
+                    "featureType": "administrative",
+                    "elementType": "geometry.fill",
+                    "stylers": [{"color": "#000000"},{"lightness": 20}]
+                },{
+                    "featureType": "administrative",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{"color": "#000000"},{"lightness": 17},{"weight": 1.2}]
+                },{
+                    "featureType": "administrative.country",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#e5c163"}]
+                },{
+                    "featureType": "administrative.locality",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#c4c4c4"}]
+                },{
+                    "featureType": "administrative.neighborhood",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#e5c163"}]
+                },{
+                    "featureType": "landscape",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#000000"},{"lightness": 20}]
+                },{
+                    "featureType": "poi",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#000000"},{"lightness": 21},{"visibility": "on"}]
+                },{
+                    "featureType": "poi.business",
+                    "elementType": "geometry",
+                    "stylers": [{"visibility": "on"}]
+                },{
+                    "featureType": "road.highway",
+                    "elementType": "geometry.fill",
+                    "stylers": [{"color": "#e5c163"},{"lightness": "0"}]
+                },{
+                    "featureType": "road.highway",
+                    "elementType": "geometry.stroke",
+                    "stylers": [{"visibility": "off"}]
+                },{
+                    "featureType": "road.highway",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#ffffff"}]
+                },{
+                    "featureType": "road.highway",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [{"color": "#e5c163"}]
+                },{
+                    "featureType": "road.arterial",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#000000"},{"lightness": 18}]
+                },{
+                    "featureType": "road.arterial",
+                    "elementType": "geometry.fill",
+                    "stylers": [{"color": "#575757"}]
+                },{
+                    "featureType": "road.arterial",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#ffffff"}]
+                },{
+                    "featureType": "road.arterial",
+                    "elementType": "labels.text.stroke",
+                    "stylers": [{"color": "#2c2c2c"}]
+                },{
+                    "featureType": "road.local",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#000000"},{"lightness": 16}]
+                },{
+                    "featureType": "road.local",
+                    "elementType": "labels.text.fill",
+                    "stylers": [{"color": "#999999"}]
+                },{
+                    "featureType": "transit",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#000000"},{"lightness": 19}]
+                },{
+                    "featureType": "water",
+                    "elementType": "geometry",
+                    "stylers": [{"color": "#000000"},{"lightness": 0}]
+                }]
+            
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const idioma = urlParams.get('idioma');
+
+        document.getElementById("idioma").value = idioma;
+
+        var script = document.createElement('script');
+        script.src = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyADjOfdGIg-7JiqjoTstMN9el4g-nLhxxA&callback=iniciaMapa&language=' + idioma + '&callback=iniciaMapa';
+        document.head.appendChild(script);
+
+        function iniciaMapa(){
+            var map = new google.maps.Map(
+            document.getElementById('mapa'),
+                {
+                    center: coordenadas,
+                    zoom: 3,
+                    mapTypeControl: false,
+                    streetViewControl: false,
+                    styles: estilomapa
+                }
+            );
+        }
+
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+ 
+</body>
+</html>
