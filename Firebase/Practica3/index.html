@@ -1,0 +1,204 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JVE Store</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <style>
+        h4{
+            font-size: large;
+            text-align: center;
+            padding-top: 7px;
+        }
+        img{
+            width: 100%;
+        }
+        .padtop{
+            padding-top: 2rem;
+        }
+        .logged-in, .logged-out{
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">JVE Store</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active logged-in">
+                <a class="nav-link " href="#" data-toggle="modal" data-target="#cuentamodal">Mi Cuenta</a>
+            </li>
+            <li class="nav-item logged-out">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#ingresarmodal">Ingresar</a>
+            </li>
+            <li class="nav-item logged-in">
+                <a class="nav-link" href="#" id="salir">Salir</a>
+            </li>
+            <li class="nav-item logged-out">
+                <a class="nav-link" href="#" data-toggle="modal" data-target="#registrarmodal">Registrarse</a>
+            </li>
+          </ul>
+        </div>
+    </nav>
+
+    <!-- Modal Cuenta -->
+    <div class="modal fade" id="cuentamodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Mi Cuenta</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body datosdelacuenta">
+                
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+        </div>
+    </div>
+    
+    <!-- Modal Ingresar -->
+    <div class="modal fade" id="ingresarmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ingreso</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form id="formaingresar">
+                    <div class="row m-2">
+                        <div class="col-4"> <h4>E-mail</h4> </div>
+                        <div class="col-8"> <input required class="form-control" type="email" id="correo" placeholder="Ingresa tu e-mail"> </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-4"> <h4>Contraseña</h4> </div>
+                        <div class="col-8"> <input required class="form-control" type="password" id="contrasena" placeholder="Ingresa tu contraseña"> </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <button class="btn btn-primary">Aceptar</button>
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-12 text-center">
+                            <p class="error text-danger"></p>
+                        </div>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-12 text-center">
+                        <span onclick="entrarGoogle()" class="btn btn-danger">Ingresar con Google</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- Modal Registrar -->
+    <div class="modal fade" id="registrarmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Registro</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form id="formaregistrar">
+                    <div class="row m-2">
+                        <div class="col-4"> <h4>Nombre</h4> </div>
+                        <div class="col-8"> <input required class="form-control" type="text" id="rnombre" placeholder="Ingresa tu nombre"> </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-4"> <h4>E-mail</h4> </div>
+                        <div class="col-8"> <input required class="form-control" type="email" id="rcorreo" placeholder="Ingresa tu e-mail"> </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-4"> <h4>Contraseña</h4> </div>
+                        <div class="col-8"> <input required class="form-control" type="password" id="rcontrasena" placeholder="Ingresa tu contraseña"> </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-4"> <h4>Telefono</h4> </div>
+                        <div class="col-8"> <input required step="any" class="form-control" type="number" id="rtelefono" placeholder="Ingresa tu telefono"> </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-4"> <h4>Direccion</h4> </div>
+                        <div class="col-8"> <input required class="form-control" type="text" id="rdireccion" placeholder="Ingresa tu direccion"> </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <button class="btn btn-primary">Registrarse</button>
+                        </div>
+                    </div>
+                    <div class="row m-2">
+                        <div class="col-12 text-center">
+                            <p class="error text-danger"></p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <div class="container padtop">
+        <div class="row text-center" id="listaproductos"></div>
+    </div>
+    
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-firestore.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+        https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script>
+    var firebaseConfig = {
+        apiKey: "AIzaSyC7_jWtJaWwgHhCcQHN_mWPrzXuFEAqaa4",
+        authDomain: "autorizacion-ff3b4.firebaseapp.com",
+        databaseURL: "https://autorizacion-ff3b4.firebaseio.com",
+        projectId: "autorizacion-ff3b4",
+        storageBucket: "autorizacion-ff3b4.appspot.com",
+        messagingSenderId: "138455421006",
+        appId: "1:138455421006:web:51f15ba1987255e7a1f31f"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    
+</script>
+
+<script src="js/Autorizacion.js"></script>
+<script src="js/Index.js"></script>
+
+</body>
+</html>
